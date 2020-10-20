@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @RequestMapping("/v1/task")
 public class TaskController {
@@ -25,7 +27,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getTask")
     public TaskDto getTask(@RequestParam Long id) {
-        return taskMapper.mapToTaskDto(service.getTaskWithId(id));
+        return taskMapper.mapToTaskDto(service.getTaskById(id));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteTask")
@@ -38,9 +40,9 @@ public class TaskController {
         return new TaskDto(1L, "edited test title", "edited test content");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/createTask")
-    public void createTask(TaskDto taskDto) {
-
+    @RequestMapping(method = RequestMethod.POST, value = "/createTask", consumes = APPLICATION_JSON_VALUE)
+    public void createTask(@RequestBody TaskDto taskDto) {
+        service.saveTask(taskMapper.mapToTask(taskDto));
     }
 
 }
