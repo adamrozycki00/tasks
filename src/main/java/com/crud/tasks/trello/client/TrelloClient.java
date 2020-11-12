@@ -8,9 +8,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Optional.empty;
 
 @Component
 public class TrelloClient {
@@ -24,19 +26,29 @@ public class TrelloClient {
     @Value("${trello.app.token}")
     private String trelloAppToken;
 
+    @Value("${trello.app.username}")
+    private String trelloAppUsername;
+
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<TrelloBoardDTO> getTrelloBoards() {
-        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/adamroycki1/boards")
+    public Optional<List<TrelloBoardDTO>> getTrelloBoards() {
+        try {
+            TrelloBoardDTO[] boardsResponse = restTemplate.getForObject(getUrl(), TrelloBoardDTO[].class);
+            if (boardsResponse != null)
+                return Optional.of(Arrays.asList(boardsResponse));
+        } catch (Exception ignored) {
+        }
+        return empty();
+    }
+
+    private URI getUrl() {
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/" + trelloAppUsername + "/boards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloAppToken)
                 .queryParam("fields", "name,id")
                 .build().encode().toUri();
-        TrelloBoardDTO[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDTO[].class);
-        if (boardsResponse != null)
-            return Arrays.asList(boardsResponse);
-        return new ArrayList<>();
+        return url;
     }
 
 }
