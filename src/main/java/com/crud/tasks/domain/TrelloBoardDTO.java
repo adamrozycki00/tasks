@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class TrelloBoardDTO {
 
-    private String name;
     private String id;
+    private String name;
 
 }
