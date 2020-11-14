@@ -35,7 +35,7 @@ public class TrelloClient {
 
     public List<TrelloBoardDTO> getTrelloBoards() {
         Optional<TrelloBoardDTO[]> boardsResponse = Optional.of(restTemplate.getForObject(getUrl(), TrelloBoardDTO[].class));
-        return boardsResponse.isPresent() ? Arrays.asList(boardsResponse.get()) : new ArrayList<>();
+        return boardsResponse.map(Arrays::asList).orElseGet(ArrayList::new);
     }
 
     private URI getUrl() {
@@ -43,6 +43,7 @@ public class TrelloClient {
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloAppToken)
                 .queryParam("fields", "name,id")
+                .queryParam("lists", "all")
                 .build().encode().toUri();
         return url;
     }
