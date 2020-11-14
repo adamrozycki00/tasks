@@ -20,7 +20,6 @@ public class TrelloController {
 
     @RequestMapping(value = "/getTrelloBoards", method = GET)
     public void getTrelloBoards() {
-
         trelloClient.getTrelloBoards()
                 .forEach(board -> {
                     System.out.println("\n" + board.getName() + " - " + board.getId());
@@ -33,7 +32,8 @@ public class TrelloController {
     @RequestMapping(value = "/createTrelloCard", method = POST)
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDTO trelloCardDTO) {
         CreatedTrelloCard card = trelloClient.createNewCard(trelloCardDTO);
-        System.out.println(card.getId() + " - " + card.getName() + " - " + card.getShortUrl());
+//        System.out.println(card.getId() + " - " + card.getName() + " - " + card.getShortUrl() + " - " +
+//                card.getBadges().getVotes() + " - " + card.getBadges().getAttachmentsByType().getTrello().getBoard());
         return card;
     }
 
