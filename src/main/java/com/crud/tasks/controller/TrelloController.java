@@ -1,11 +1,15 @@
 package com.crud.tasks.controller;
 
+import com.crud.tasks.domain.CreatedTrelloCard;
+import com.crud.tasks.domain.TrelloCardDTO;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/v1/trello")
@@ -24,6 +28,13 @@ public class TrelloController {
                     board.getLists().forEach(list ->
                             System.out.println("\t" + list.getName() + " - " + list.getId() + " - " + list.isClosed()));
                 });
+    }
+
+    @RequestMapping(value = "/createTrelloCard", method = POST)
+    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDTO trelloCardDTO) {
+        CreatedTrelloCard card = trelloClient.createNewCard(trelloCardDTO);
+        System.out.println(card.getId() + " - " + card.getName() + " - " + card.getShortUrl());
+        return card;
     }
 
 }
