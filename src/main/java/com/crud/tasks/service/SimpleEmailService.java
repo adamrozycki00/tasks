@@ -30,6 +30,11 @@ public class SimpleEmailService {
     private SimpleMailMessage getMailMessage(final Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
+
+        String toCc = mail.getToCc();
+        if (toCc != null)
+            mailMessage.setCc(toCc);
+
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
         return mailMessage;
