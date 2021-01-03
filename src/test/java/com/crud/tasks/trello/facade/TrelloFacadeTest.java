@@ -100,7 +100,7 @@ public class TrelloFacadeTest {
     }
 
     @Test
-    public void shouldReturnCreatedTrelloCardDTO() {
+    public void shouldCallCreateTrelloCard() {
         //given
         TrelloCardDTO cardDTO = new TrelloCardDTO("name", "desc", "pos", "id");
 
