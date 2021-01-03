@@ -13,7 +13,7 @@ public class TrelloMapper {
         return new TrelloBoard(dto.getId(), dto.getName(), mapToLists(dto.getLists()));
     }
 
-    public List<TrelloBoard> mapToBoards(List<TrelloBoardDTO> boardDTOs) {
+    public List<TrelloBoard> mapToBoards(List<TrelloBoardDTO> boardDTOs) { //test
         return boardDTOs.stream()
                 .map(this::mapToBoard)
                 .collect(toList());
@@ -23,7 +23,7 @@ public class TrelloMapper {
         return new TrelloBoardDTO(board.getId(), board.getName(), mapToListDTOs(board.getLists()));
     }
 
-    public List<TrelloBoardDTO> mapToBoardDTOs(List<TrelloBoard> boards) {
+    public List<TrelloBoardDTO> mapToBoardDTOs(List<TrelloBoard> boards) { //test
         return boards.stream()
                 .map(this::mapToBoardDTO)
                 .collect(toList());
@@ -49,11 +49,11 @@ public class TrelloMapper {
                 .collect(toList());
     }
 
-    public TrelloCard mapToCard(TrelloCardDTO dto) {
+    public TrelloCard mapToCard(TrelloCardDTO dto) { //test
         return new TrelloCard(dto.getName(), dto.getDescription(), dto.getPos(), dto.getListId());
     }
 
-    public TrelloCardDTO mapToCardDTO(TrelloCard card) {
+    public TrelloCardDTO mapToCardDTO(TrelloCard card) { //test
         return new TrelloCardDTO(card.getName(), card.getDescription(), card.getPos(), card.getListId());
     }
 
