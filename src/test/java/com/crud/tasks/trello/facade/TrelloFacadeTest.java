@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrelloFacadeTest {
@@ -98,5 +98,18 @@ public class TrelloFacadeTest {
             });
         });
     }
+
+    @Test
+    public void shouldReturnCreatedTrelloCardDTO() {
+        //given
+        TrelloCardDTO cardDTO = new TrelloCardDTO("name", "desc", "pos", "id");
+
+        //when
+        facade.createTrelloCard(cardDTO);
+
+        //then
+        verify(service, times(1)).createTrelloCard(cardDTO);
+    }
+
 
 }
