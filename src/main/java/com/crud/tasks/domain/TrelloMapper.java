@@ -13,30 +13,14 @@ public class TrelloMapper {
         return new TrelloBoard(dto.getId(), dto.getName(), mapToLists(dto.getLists()));
     }
 
-    public TrelloBoardDTO mapToBoardDTO(TrelloBoard board) {
-        return new TrelloBoardDTO(board.getId(), board.getName(), mapToListDTOs(board.getLists()));
-    }
-
-    public TrelloList mapToList(TrelloListDTO dto) {
-        return new TrelloList(dto.getId(), dto.getName(), dto.isClosed());
-    }
-
-    public TrelloListDTO mapToListDTO(TrelloList list) {
-        return new TrelloListDTO(list.getId(), list.getName(), list.isClosed());
-    }
-
-    public TrelloCard mapToCard(TrelloCardDTO dto) {
-        return new TrelloCard(dto.getName(), dto.getDescription(), dto.getPos(), dto.getListId());
-    }
-
-    public TrelloCardDTO mapToCardDTO(TrelloCard card) {
-        return new TrelloCardDTO(card.getName(), card.getDescription(), card.getPos(), card.getListId());
-    }
-
     public List<TrelloBoard> mapToBoards(List<TrelloBoardDTO> boardDTOs) {
         return boardDTOs.stream()
                 .map(this::mapToBoard)
                 .collect(toList());
+    }
+
+    public TrelloBoardDTO mapToBoardDTO(TrelloBoard board) {
+        return new TrelloBoardDTO(board.getId(), board.getName(), mapToListDTOs(board.getLists()));
     }
 
     public List<TrelloBoardDTO> mapToBoardDTOs(List<TrelloBoard> boards) {
@@ -45,16 +29,32 @@ public class TrelloMapper {
                 .collect(toList());
     }
 
+    public TrelloList mapToList(TrelloListDTO dto) {
+        return new TrelloList(dto.getId(), dto.getName(), dto.isClosed());
+    }
+
     public List<TrelloList> mapToLists(List<TrelloListDTO> dtoList) {
         return dtoList.stream()
                 .map(this::mapToList)
                 .collect(toList());
     }
 
+    public TrelloListDTO mapToListDTO(TrelloList list) {
+        return new TrelloListDTO(list.getId(), list.getName(), list.isClosed());
+    }
+
     public List<TrelloListDTO> mapToListDTOs(List<TrelloList> lists) {
         return lists.stream()
                 .map(this::mapToListDTO)
                 .collect(toList());
+    }
+
+    public TrelloCard mapToCard(TrelloCardDTO dto) {
+        return new TrelloCard(dto.getName(), dto.getDescription(), dto.getPos(), dto.getListId());
+    }
+
+    public TrelloCardDTO mapToCardDTO(TrelloCard card) {
+        return new TrelloCardDTO(card.getName(), card.getDescription(), card.getPos(), card.getListId());
     }
 
 }
