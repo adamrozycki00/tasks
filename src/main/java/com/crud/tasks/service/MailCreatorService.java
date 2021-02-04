@@ -1,6 +1,8 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.domain.Task;
+import com.crud.tasks.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class MailCreatorService {
 
     @Autowired
     private AdminConfig adminConfig;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     @Qualifier("templateEngine")
@@ -40,12 +45,14 @@ public class MailCreatorService {
     }
 
     public String countTrelloTasksEmail(String message) {
+        List<Task> tasks = taskRepository.findAll();
         Context context = new Context();
         context.setVariable("preview", "Trello task count updated");
         context.setVariable("goodbye", GOODBYE);
         context.setVariable("message", message);
+        context.setVariable("tasks", tasks);
         context.setVariable("admin_config", adminConfig);
-        return templateEngine.process("mail/created-trello-card-mail", context);
+        return templateEngine.process("mail/trello-task-count-mail", context);
     }
 
 }
